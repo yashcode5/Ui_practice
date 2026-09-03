@@ -38,6 +38,7 @@ const reducer = (state, action) => {
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
   const fetchUsers = async () => {
     dispatch({ type: "FETCH_START" });
@@ -63,8 +64,17 @@ const App = () => {
     fetchUsers();
   }, []);
 
+  // Debouncing
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [search]);
+
   const filteredUsers = state.data.filter((user) =>
-    user.name.toLowerCase().includes(search.toLowerCase())
+    user.name.toLowerCase().includes(debouncedSearch.toLowerCase())
   );
 
   return (
@@ -84,9 +94,7 @@ const App = () => {
 
       <ul>
         {filteredUsers.map((user) => (
-          <li key={user.id}>
-            {user.name}
-          </li>
+          <li key={user.id}>{user.name}</li>
         ))}
       </ul>
     </div>
