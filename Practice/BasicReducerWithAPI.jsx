@@ -92,11 +92,15 @@ const App = () => {
 
       {state.error && <p>{state.error}</p>}
 
+       {filteredUsers.length > 0 ? (
       <ul>
         {filteredUsers.map((user) => (
           <li key={user.id}>{user.name}</li>
         ))}
       </ul>
+    ) : (
+      <p>No users found</p>
+    )}
     </div>
   );
 };
