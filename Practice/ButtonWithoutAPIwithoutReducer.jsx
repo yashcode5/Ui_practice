@@ -11,6 +11,7 @@ const users = [
 const App = () => {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const handleSearch = () => {
     const filteredUsers = users.filter((user) =>
@@ -18,12 +19,14 @@ const App = () => {
     );
 
     setResults(filteredUsers);
+    setHasSearched(true);
   };
 
   const handleDelete = (id) => {
     setResults((prev) =>
       prev.filter((user) => user.id !== id)
     );
+    setHasSearched(false);
   };
 
   return (
@@ -53,9 +56,9 @@ const App = () => {
             </li>
           ))}
         </ul>
-      ) : (
+      ) : hasSearched ? (
         <p>No users found</p>
-      )}
+      ) : null}
     </div>
   );
 };
