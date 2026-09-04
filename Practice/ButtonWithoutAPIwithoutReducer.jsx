@@ -1,67 +1,66 @@
-import { useState } from "react";
-
-const users = [
-  { id: 1, name: "Leanne Graham" },
-  { id: 2, name: "Ervin Howell" },
-  { id: 3, name: "Clementine Bauch" },
-  { id: 4, name: "Patricia Lebsack" },
-  { id: 5, name: "Chelsey Dietrich" }
-];
+import { useState } from "react"
 
 const App = () => {
-  const [search, setSearch] = useState("");
-  const [results, setResults] = useState([]);
-  const [hasSearched, setHasSearched] = useState(false);
+  const [search, setSearch] = useState("")
+  const [result, setResult] = useState([])
+  const [hasSearched, setHasSearched] = useState(false)
 
-  const handleSearch = () => {
+  const [users, setUsers] = useState([
+    { id: "1", name: "Yash Sinha" },
+    { id: "2", name: "Mamli Sinha" },
+    { id: "3", name: "Suranjita Das" }
+  ])
+
+  const handleUsers = () => {
+    if (search.trim() === "") {
+      setResult([])
+      setHasSearched(false)
+      return
+    }
+
     const filteredUsers = users.filter((user) =>
       user.name.toLowerCase().includes(search.toLowerCase())
-    );
-
-    setResults(filteredUsers);
-    setHasSearched(true);
-  };
+    )
+    setResult(filteredUsers)
+    setHasSearched(true)
+  }
 
   const handleDelete = (id) => {
-    setResults((prev) =>
+    setResult((prev) =>
       prev.filter((user) => user.id !== id)
-    );
-    setHasSearched(false);
-  };
+    )
+  }
 
   return (
     <div>
       <h2>Users</h2>
-
       <input
         type="text"
-        placeholder="Search user"
         value={search}
+        placeholder="Search user"
         onChange={(e) => setSearch(e.target.value)}
       />
-
-      <button onClick={handleSearch}>
+      <button onClick={handleUsers}>
         Search
       </button>
-
-      {results.length > 0 ? (
-        <ul>
-          {results.map((user) => (
-            <li key={user.id}>
-              {user.name}
-
-              <button onClick={() => handleDelete(user.id)}>
-                Delete
-              </button>
-            </li>
-          ))}
-        </ul>
-      ) : hasSearched ? (
-        <p>No users found</p>
-      ) : null}
+      {hasSearched && (
+        result.length > 0 ? (
+          <ul>
+            {result.map((user) => (
+              <li key={user.id}>
+                {user.name}
+                <button onClick={() => handleDelete(user.id)}>
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No users found!!!</p>
+        )
+      )}
     </div>
-  );
-};
+  )
+}
 
-export default App;
-
+export default App
