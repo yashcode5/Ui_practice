@@ -1,6 +1,6 @@
 import UserProvider from "./UserProvider";
 
-function App() {
+const App = () => {
   return (
     <UserProvider>
       <Dashboard />
