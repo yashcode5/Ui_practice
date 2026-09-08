@@ -12,11 +12,6 @@ const App = () => {
   ])
 
   const handleUsers = () => {
-    if (search.trim() === "") {
-      setResult([])
-      setHasSearched(false)
-      return
-    }
 
     const filteredUsers = users.filter((user) =>
       user.name.toLowerCase().includes(search.toLowerCase())
